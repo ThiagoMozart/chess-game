@@ -7,7 +7,9 @@ O projeto visa criar um jogo de xadrez web
 - nodejs - 17
 - react
 
-## Como rodar
+## Como rodar (primeiramente)
+
+ - npm install
 
 ### Usando Docker (Recomendado)
 
