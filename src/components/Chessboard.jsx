@@ -1,10 +1,10 @@
 import React from "react";
 
-import './Chessboard.css'
+import './styles/Chessboard.css'
 
 // Eixos do tabuleiro
-const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"]
-const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"]
+//const horizontalAxis = ["a", "b", "c", "d", "e", "f", "g", "h"]
+//const verticalAxis = ["1", "2", "3", "4", "5", "6", "7", "8"]
 
 export default function Chessboard() {
     let board = [];
@@ -15,10 +15,10 @@ export default function Chessboard() {
             const number = j + i + 2;
 
             if (number % 2 === 0){
-                board.push(<div className="square black-square"></div>)
+                board.push(<div key={`x${j}y${i}`} className="square black-square"></div>)
             }
             else{
-                board.push(<div className="square white-square"></div>)
+                board.push(<div key={`x${j}y${i}`} className="square white-square"></div>)
             }
         }
     }
