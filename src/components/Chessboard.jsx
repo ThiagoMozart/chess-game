@@ -15,10 +15,10 @@ export default function Chessboard() {
             const number = j + i + 2;
 
             if (number % 2 === 0){
-                board.push(<div key={`x${j}y${i}`} className="square black-square"></div>)
+                board.push(<div key={`x${j}y${i}`} className="black-square"></div>)
             }
             else{
-                board.push(<div key={`x${j}y${i}`} className="square white-square"></div>)
+                board.push(<div key={`x${j}y${i}`} className="white-square"></div>)
             }
         }
     }

@@ -1,22 +1,13 @@
 /* Variáveis globais : tamanho em pixel do tabuleiro e cor das casas */
 :root {
-    --size: 100px;
     --white-square: #fff4ad;
     --black-square: #1f1f1f;
 }
 
 #chessboard {
     display: grid;
-    grid-template-columns: repeat(8, var(--size));
-    grid-template-rows: repeat(8, var(--size));
-    width: 8 * var(--size);
-    height: 8 * var(--size);
-    background-color: white;
-}
-
-#chessboard .square {
-    width: var(--size);
-    height: var(--size);
+    grid-template-columns: repeat(8, minmax(50px, 5.5vw));
+    grid-template-rows: repeat(8, minmax(50px, 5.5vw));
 }
 
 #chessboard .black-square {
