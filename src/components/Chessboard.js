@@ -40,11 +40,11 @@ for (let p = 0; p<2; p++){
 
 //Peoes 
 for (let i = 0; i< 8; i++){
-    pieces.push({image:"assets/peos_b.png",x:i, y:6})
+    pieces.push({image:"assets/images/peao_b.png",x:i, y:6})
 }
 
 for (let i = 0; i< 8; i++){
-    pieces.push({image:"assets/peos_w.png",x:i, y:1})
+    pieces.push({image:"assets/images/peao_w.png",x:i, y:1})
 }
 
 
