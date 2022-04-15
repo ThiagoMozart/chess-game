@@ -1,5 +1,5 @@
 import Menu from '../components/Menu';
-import Chessboard from '../components/Chessboard';
+import Chessboard from '../components/Chessboard.js';
 import './App.css';
 
 function App() {

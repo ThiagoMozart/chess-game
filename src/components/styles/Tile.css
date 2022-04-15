@@ -1,0 +1,17 @@
+:root {
+    --white-square: #e4e3dc;
+    --black-square: #1f1f1f;
+}
+
+.tile{
+    display: grid;
+    place-content: center;
+}
+
+.black-square {
+    background-color: var(--black-square);
+}
+
+.white-square {
+    background-color: var(--white-square);
+}
