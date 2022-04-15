@@ -7,7 +7,20 @@
     display: grid;
     place-content: center;
 }
+.tile .chess-piece{
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 30px;
+    height: 30px;
+}
 
+.tile .chess-piece:hover{
+    cursor: grab;
+}
+
+.tile .chess-piece:active{
+    cursor: grabbing;
+}
 .black-square {
     background-color: var(--black-square);
 }

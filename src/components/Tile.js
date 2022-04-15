@@ -7,16 +7,17 @@ class Props{
     }
 }
 
-export default function tile({number, image}) {
+export default function Tile({number, image}) {
+
     if (number % 2 === 0){
         return <div className= "tile black-square">
-            <img src= {image}/>
+            {image && <div style = {{backgroundImage : `url(${image})`}} className= "chess-piece"></div>}
             </div>
     }
     else{
         return <div className= "tile white-square">
-            <img src= {image}/>
-        </div>
+            {image && <div style = {{backgroundImage : `url(${image})`}} className= "chess-piece"></div>}        
+            </div>
 
     }
 
