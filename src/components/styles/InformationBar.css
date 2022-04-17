@@ -1,0 +1,11 @@
+.informationContent {
+    width: 44.4%;
+    min-width: 320px !important;
+    border: 2px solid;
+}
+
+.historyButton {
+    color: white !important;
+    background-color: darkcyan !important;
+    padding: 1% !important;
+}

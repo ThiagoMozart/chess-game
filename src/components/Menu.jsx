@@ -8,7 +8,6 @@ function Menu() {
           <Nav className="me-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <Nav.Link href="#game">Sobre o jogo</Nav.Link>
-            <Nav.Link href="#contact">Contato</Nav.Link>
           </Nav>
         </Container>
       </Navbar>

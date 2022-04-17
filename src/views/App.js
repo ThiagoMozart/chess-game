@@ -1,5 +1,6 @@
 import Menu from '../components/Menu';
 import Chessboard from '../components/Chessboard';
+import InformationBar from '../components/InformationBar';
 import './App.css';
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <div>
       <Menu />
       <div className="chessContent">
+        <InformationBar />
         <Chessboard />
       </div>
     </div>
