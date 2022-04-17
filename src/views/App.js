@@ -1,6 +1,6 @@
-import Menu from '../components/Menu';
-import Chessboard from '../components/Chessboard';
-import InformationBar from '../components/InformationBar';
+import Menu from '../components/Menu.jsx';
+import Chessboard from '../components/Chessboard.jsx';
+import InformationBar from '../components/InformationBar.jsx';
 import './App.css';
 
 function App() {
