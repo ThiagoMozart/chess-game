@@ -12,6 +12,8 @@ import ReiB from "../images/rei_b.png"
 import TorreW from "../images/torre_w.png"
 import TorreB from "../images/torre_b.png"
 
+import Tile from '../components/Tile.jsx'
+
 export const mountBoard = () => {
     let newBoard = []
     for (let j = 7; j >= 0; j--){
@@ -19,10 +21,10 @@ export const mountBoard = () => {
             const number = j + i + 2;
 
             if (number % 2 === 0){
-                newBoard.push({position: `x${j}y${i}`, squareColor: 'black-square', element: <div key={`x${j}y${i}`} id={`x${j}y${i}`} className="black-square"></div>})
+                newBoard.push({position: `x${j}y${i}`, squareColor: 'black-square', element: <Tile position={`x${j}y${i}`} squareColor="black-square"></Tile>})
             }
             else{
-                newBoard.push({position: `x${j}y${i}`, squareColor: 'white-square',element: <div key={`x${j}y${i}`} id={`x${j}y${i}`} className="white-square"></div>})
+                newBoard.push({position: `x${j}y${i}`, squareColor: 'white-square',element: <Tile position={`x${j}y${i}`} squareColor="black-square"></Tile>})
             }
         }
     }
