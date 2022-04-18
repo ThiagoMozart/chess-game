@@ -12,8 +12,14 @@
 
 #chessboard .black-square {
     background-color: var(--black-square);
+    display: flex;
 }
 
 #chessboard .white-square {
     background-color: var(--white-square);
+    display: flex;
+}
+
+.text {
+    position: absolute;
 }
