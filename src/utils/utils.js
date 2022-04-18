@@ -39,8 +39,6 @@ export const fillBoardWithPieces = () => {
         new Piece(true, 'x1y5','peao', PeaoW),
         new Piece(true, 'x1y6','peao', PeaoW),
         new Piece(true, 'x1y7','peao', PeaoW),
-        new Piece(true, 'x1y0','peao', PeaoW),
-        new Piece(true, 'x1y0','peao', PeaoW),
         new Piece(true, 'x0y0','torre', TorreW),
         new Piece(true, 'x0y1','cavalo', CavaloW),
         new Piece(true, 'x0y2','bispo', BispoW),
