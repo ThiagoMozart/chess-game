@@ -2,8 +2,8 @@ import './styles/InformationBar.css';
 import { Navbar, Container, Offcanvas } from 'react-bootstrap';
 import { useState } from 'react';
 
-function InformationBar() {
-  const deathCount = useState(0);
+export default function InformationBar() {
+  const [deathCount] = useState(0);
   return (
     <Navbar variant='dark' className='informationContent' bg="dark" expand={false}>
       <Container fluid>
@@ -23,5 +23,3 @@ function InformationBar() {
     </Navbar>
   );
 }
-
-export default InformationBar;

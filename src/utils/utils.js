@@ -21,10 +21,10 @@ export const mountBoard = () => {
             const number = j + i + 2;
 
             if (number % 2 === 0){
-                newBoard.push({position: `x${j}y${i}`, squareColor: 'black-square', element: <Tile position={`x${j}y${i}`} squareColor="black-square"></Tile>})
+                newBoard.push({position: `x${j}y${i}`, squareColor: 'black-square', element: <Tile key={`x${j}y${i}`} position={`x${j}y${i}`} squareColor="black-square"></Tile>})
             }
             else{
-                newBoard.push({position: `x${j}y${i}`, squareColor: 'white-square',element: <Tile position={`x${j}y${i}`} squareColor="black-square"></Tile>})
+                newBoard.push({position: `x${j}y${i}`, squareColor: 'white-square',element: <Tile key={`x${j}y${i}`} position={`x${j}y${i}`} squareColor="black-square"></Tile>})
             }
         }
     }

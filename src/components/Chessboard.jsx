@@ -7,46 +7,53 @@ import "./styles/Chessboard.css";
 export default function Chessboard() {
   const [board, setBoard] = useState(mountBoard());
   const [pieces, setPieces] = useState(fillBoardWithPieces());
-  const [activePiece, setActivePiece] = useState(null);
+  let activePiece = null;
 
   useEffect(() => {
     let newBoard = [...board];
     newBoard.map((tile) => {
-      const foundItem = pieces.findIndex((x) => x.position === tile.position);
-      if (foundItem != -1) {
-        const piece = pieces[foundItem];
-        tile.element = (
-          <Tile
-            position={tile.position}
-            squareColor={tile.squareColor}
-          >
-            <img draggable='true' alt="" src={piece.imagePath} loading="lazy" />
-          </Tile>
-        );
-      } else {
-        tile.element = (
-          <Tile
-            position={tile.position}
-            squareColor={tile.squareColor}
-          ></Tile>
-        );
-      }
+      return reloadChessboardTile(tile);
     });
     setBoard(newBoard);
   }, [pieces]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  function reloadChessboardTile(tile) {
+    const itemIndexInPieces = pieces.findIndex((x) => x.position === tile.position);
+    const anyPieceInThisTile = itemIndexInPieces !== -1;
+    if (anyPieceInThisTile) {
+       const piece = pieces[itemIndexInPieces];
+       tile.element = (
+         <Tile
+           key={tile.position}
+           position={tile.position}
+           squareColor={tile.squareColor}
+         >
+           <img className="piece" draggable='true' alt="" src={piece.imagePath} loading="lazy" />
+         </Tile>
+       );
+     } else {
+       tile.element = (
+         <Tile
+           key={tile.position}
+           position={tile.position}
+           squareColor={tile.squareColor}
+         ></Tile>
+       );
+     }
+     return tile;
+  }
+
   function grabPiece(e) {
-    //e.preventDefault();
     const element = e.target;
-    if (element.parentElement.outerHTML.includes("img")) {
-      setActivePiece(element.parentElement);
-    } else {
-      e.preventDefault();
+    const elementClasses = element.classList;
+    const isPieceElement = elementClasses.contains('piece');
+    if (isPieceElement) {
+      activePiece = element.parentElement;
     }
   }
 
   function dropPiece(e) {
-    if (activePiece != null) {
+    if (activePiece) {
       const x = e.clientX;
       const y = e.clientY;
       const elementMouseIsOver = document.elementFromPoint(x, y);
@@ -54,14 +61,14 @@ export default function Chessboard() {
       const isTileElement = elementClasses.contains('white-square') || elementClasses.contains('black-square');
       if (isTileElement) {
         let newPieces = [...pieces];
-        const foundItem = pieces.findIndex((x) => x.position == activePiece.id);
-        if (foundItem != -1 && newPieces[foundItem].fromPlayer) {
+        const foundItem = pieces.findIndex((x) => x.position === activePiece.id);
+        if (foundItem !== -1 && newPieces[foundItem].fromPlayer) {
           newPieces[foundItem].position = elementMouseIsOver.id;
           setPieces(newPieces);
         }
       }
     }
-    setActivePiece(null);
+    activePiece = null;
   }
 
   return (
