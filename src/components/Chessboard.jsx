@@ -20,7 +20,7 @@ export default function Chessboard() {
             position={tile.position}
             squareColor={tile.squareColor}
           >
-            <img alt="" src={piece.imagePath} loading="lazy" />
+            <img draggable='true' alt="" src={piece.imagePath} loading="lazy" />
           </Tile>
         );
       } else {
@@ -36,6 +36,7 @@ export default function Chessboard() {
   }, [pieces]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function grabPiece(e) {
+    //e.preventDefault();
     const element = e.target;
     if (element.parentElement.outerHTML.includes("img")) {
       setActivePiece(element.parentElement);
@@ -44,31 +45,30 @@ export default function Chessboard() {
     }
   }
 
-  function movePiece(e) {
+  function dropPiece(e) {
     if (activePiece != null) {
-      var x = e.clientX,
-        y = e.clientY,
-        elementMouseIsOver = document.elementFromPoint(x, y);
-      if (elementMouseIsOver.outerHTML.includes("div")) {
+      const x = e.clientX;
+      const y = e.clientY;
+      const elementMouseIsOver = document.elementFromPoint(x, y);
+      const elementClasses = elementMouseIsOver.classList;
+      const isTileElement = elementClasses.contains('white-square') || elementClasses.contains('black-square');
+      if (isTileElement) {
         let newPieces = [...pieces];
         const foundItem = pieces.findIndex((x) => x.position == activePiece.id);
-        if (foundItem != -1) {
+        if (foundItem != -1 && newPieces[foundItem].fromPlayer) {
           newPieces[foundItem].position = elementMouseIsOver.id;
           setPieces(newPieces);
         }
       }
     }
-  }
-  function dropPiece(e) {
     setActivePiece(null);
   }
 
   return (
     <div
       id="chessboard"
-      onMouseMove={(e) => movePiece(e)}
-      onMouseDown={(e) => grabPiece(e)}
-      onMouseUp={(e) => dropPiece(e)}
+      onDragStart={(e) => grabPiece(e)}
+      onDragEnd={(e) => dropPiece(e)}
     >
       {board.map((x, index) => {
         return x.element;
