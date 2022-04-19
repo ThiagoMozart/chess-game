@@ -1,7 +1,7 @@
 /* Variáveis globais : tamanho em pixel do tabuleiro e cor das casas */
 :root {
     --white-square: #fff4ad;
-    --black-square: #1f1f1f;
+    --black-square: #3b3636;
 }
 
 #chessboard {
