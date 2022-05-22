@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fillBoardWithPieces, mountBoard } from "../utils/utils";
+import { fillBoardWithPieces, mountBoard, getPiecePossiblePositions, updatePieces } from "../utils/utils";
 import Tile from './Tile.jsx'
 
 import "./styles/Chessboard.css";
@@ -7,7 +7,8 @@ import "./styles/Chessboard.css";
 export default function Chessboard() {
   const [board, setBoard] = useState(mountBoard());
   const [pieces, setPieces] = useState(fillBoardWithPieces());
-  let activePiece = null;
+  const [activePieceElement, setActivePieceElement] = useState(null);
+  const [possiblePositions, setPossiblePositions] = useState([]);
 
   useEffect(() => {
     let newBoard = [...board];
@@ -47,28 +48,40 @@ export default function Chessboard() {
     const element = e.target;
     const elementClasses = element.classList;
     const isPieceElement = elementClasses.contains('piece');
+
     if (isPieceElement) {
-      activePiece = element.parentElement;
+      const pieceTile = element.parentElement
+      
+      const activePiece = pieces.findIndex((x) => x.position === pieceTile.id);
+      const newPossiblePositions = getPiecePossiblePositions(activePiece, board);
+      setPossiblePositions(newPossiblePositions)
+      setActivePieceElement(pieceTile);
     }
   }
 
+  const canDropPiece = () => activePieceElement && possiblePositions.length > 0;
+
   function dropPiece(e) {
-    if (activePiece) {
+    if (canDropPiece) {
       const x = e.clientX;
       const y = e.clientY;
       const elementMouseIsOver = document.elementFromPoint(x, y);
       const elementClasses = elementMouseIsOver.classList;
+
       const isTileElement = elementClasses.contains('white-square') || elementClasses.contains('black-square');
-      if (isTileElement) {
-        let newPieces = [...pieces];
-        const foundItem = pieces.findIndex((x) => x.position === activePiece.id);
-        if (foundItem !== -1 && newPieces[foundItem].fromPlayer) {
-          newPieces[foundItem].position = elementMouseIsOver.id;
+      const pieceElement = pieces.find(x => x.position === elementMouseIsOver.parentElement.id);
+      const isEnemyPiece = pieceElement && !pieceElement.fromPlayer;
+      if (isTileElement || isEnemyPiece) {
+        const destinationElementPosition = isEnemyPiece ? pieceElement.position : elementMouseIsOver.id;
+
+        const foundItem = pieces.findIndex((x) => x.position === activePieceElement.id);
+        if (pieces[foundItem].fromPlayer) {
+          const newPieces = updatePieces(pieces[foundItem].position, destinationElementPosition, pieces);
           setPieces(newPieces);
         }
       }
     }
-    activePiece = null;
+    setActivePieceElement(null);
   }
 
   return (
