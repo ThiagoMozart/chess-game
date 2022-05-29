@@ -23,3 +23,8 @@
 .text {
     position: absolute;
 }
+
+.redTile {
+    background-image: yellow !important;
+    opacity: 0.2;
+}
