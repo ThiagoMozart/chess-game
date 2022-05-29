@@ -56,23 +56,11 @@ export default function Chessboard() {
     if (activePiece) {
       const x = e.clientX;
       const y = e.clientY;
-      let elementMouseIsOver = document.elementFromPoint(x, y);
-      let newPieces = [...pieces];
+      const elementMouseIsOver = document.elementFromPoint(x, y);
       const elementClasses = elementMouseIsOver.classList;
-      let isBlack = elementClasses.contains('piece');
-      if (isBlack) {
-        const piece = elementMouseIsOver.parentElement;
-        const foundItem = pieces.findIndex((x) => x.position === piece.id);
-        if (foundItem !== -1 && !newPieces[foundItem].fromPlayer) {
-            newPieces.splice(foundItem, 1);
-            elementMouseIsOver = piece;
-        }
-        else {
-          isBlack = false;
-        }
-      }
-      const isTileElement = elementClasses.contains('white-square') || elementClasses.contains('black-square') || isBlack;
+      const isTileElement = elementClasses.contains('white-square') || elementClasses.contains('black-square');
       if (isTileElement) {
+        let newPieces = [...pieces];
         const foundItem = pieces.findIndex((x) => x.position === activePiece.id);
         if (foundItem !== -1 && newPieces[foundItem].fromPlayer) {
           newPieces[foundItem].position = elementMouseIsOver.id;
