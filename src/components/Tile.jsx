@@ -1,6 +1,6 @@
-function Tile({ children, position, squareColor }) {
+function Tile({ children, position, squareColor, possiblePosition }) {
   return (
-    <div id={position} className={squareColor}>
+    <div id={position} className={squareColor + ' ' + (possiblePosition ? 'redTile' : '')} >
       {children}
     </div>
   );
