@@ -20,43 +20,43 @@ export const mountBoard = () => {
 
 export const fillBoardWithPieces = () => {
     return [
-        new Piece(true, 'x1y0', 'peao'),
-        new Piece(true, 'x1y1', 'peao'),
-        new Piece(true, 'x1y2', 'peao'),
-        new Piece(true, 'x1y3', 'peao'),
-        new Piece(true, 'x1y4', 'peao'),
-        new Piece(true, 'x1y5', 'peao'),
-        new Piece(true, 'x1y6', 'peao'),
-        new Piece(true, 'x1y7', 'peao'),
-        new Piece(true, 'x0y0', 'torre'),
-        new Piece(true, 'x0y1', 'cavalo'),
-        new Piece(true, 'x0y2', 'bispo'),
-        new Piece(true, 'x0y3', 'rainha'),
-        new Piece(true, 'x0y4', 'rei'),
-        new Piece(true, 'x0y5', 'bispo'),
-        new Piece(true, 'x0y6', 'cavalo'),
-        new Piece(true, 'x0y7', 'torre'),
-        new Piece(false, 'x6y0', 'peao'),
-        new Piece(false, 'x6y1', 'peao'),
-        new Piece(false, 'x6y2', 'peao'),
-        new Piece(false, 'x6y3', 'peao'),
-        new Piece(false, 'x6y4', 'peao'),
-        new Piece(false, 'x6y5', 'peao'),
-        new Piece(false, 'x6y6', 'peao'),
-        new Piece(false, 'x6y7', 'peao'),
-        new Piece(false, 'x7y0', 'torre'),
-        new Piece(false, 'x7y1', 'cavalo'),
-        new Piece(false, 'x7y2', 'bispo'),
-        new Piece(false, 'x7y3', 'rainha'),
-        new Piece(false, 'x7y4', 'rei'),
-        new Piece(false, 'x7y5', 'bispo'),
-        new Piece(false, 'x7y6', 'cavalo'),
-        new Piece(false, 'x7y7', 'torre'),
+        new Piece(0, true, 'x1y0', 'peao'),
+        new Piece(1, true, 'x1y1', 'peao'),
+        new Piece(2, true, 'x1y2', 'peao'),
+        new Piece(3, true, 'x1y3', 'peao'),
+        new Piece(4, true, 'x1y4', 'peao'),
+        new Piece(5, true, 'x1y5', 'peao'),
+        new Piece(6, true, 'x1y6', 'peao'),
+        new Piece(7, true, 'x1y7', 'peao'),
+        new Piece(8, true, 'x0y0', 'torre'),
+        new Piece(9, true, 'x0y1', 'cavalo'),
+        new Piece(10, true, 'x0y2', 'bispo'),
+        new Piece(11, true, 'x0y3', 'rainha'),
+        new Piece(12, true, 'x0y4', 'rei'),
+        new Piece(13, true, 'x0y5', 'bispo'),
+        new Piece(14, true, 'x0y6', 'cavalo'),
+        new Piece(15, true, 'x0y7', 'torre'),
+        new Piece(16, false, 'x6y0', 'peao'),
+        new Piece(17, false, 'x6y1', 'peao'),
+        new Piece(18, false, 'x6y2', 'peao'),
+        new Piece(19, false, 'x6y3', 'peao'),
+        new Piece(20, false, 'x6y4', 'peao'),
+        new Piece(21, false, 'x6y5', 'peao'),
+        new Piece(22, false, 'x6y6', 'peao'),
+        new Piece(23, false, 'x6y7', 'peao'),
+        new Piece(24, false, 'x7y0', 'torre'),
+        new Piece(25, false, 'x7y1', 'cavalo'),
+        new Piece(26, false, 'x7y2', 'bispo'),
+        new Piece(27, false, 'x7y3', 'rainha'),
+        new Piece(28, false, 'x7y4', 'rei'),
+        new Piece(29, false, 'x7y5', 'bispo'),
+        new Piece(30, false, 'x7y6', 'cavalo'),
+        new Piece(31, false, 'x7y7', 'torre'),
     ]
 }
 
 const checkIfPeonCanMove2Times = (piece, history) => {
-    return history.length === 0 || history.filter(x => x.oldPosition === piece.position && x.type == piece.type).length === 0;
+    return !history.some(x => x.id === piece.id);
 }
 
 const checkIfPositionExist = (position, board) => {
@@ -177,8 +177,8 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
     else if (piece.type === 'torre') {
         const possiblePositionsTop = getPossibleRangePositions(piece, pieces, board, 'top');
         const possiblePositionsBottom = getPossibleRangePositions(piece, pieces, board, 'bottom');
-        const possiblePositionsRight = getPossibleRangePositions(piece, pieces, board, null,'right');
-        const possiblePositionsLeft = getPossibleRangePositions(piece, pieces, board, null,'left');
+        const possiblePositionsRight = getPossibleRangePositions(piece, pieces, board, null, 'right');
+        const possiblePositionsLeft = getPossibleRangePositions(piece, pieces, board, null, 'left');
         [
             ...possiblePositionsTop,
             ...possiblePositionsBottom,
@@ -196,8 +196,8 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
         const possiblePositionsBottomLeft = getPossibleRangePositions(piece, pieces, board, 'bottom', 'left');
         const possiblePositionsTop = getPossibleRangePositions(piece, pieces, board, 'top');
         const possiblePositionsBottom = getPossibleRangePositions(piece, pieces, board, 'bottom');
-        const possiblePositionsRight = getPossibleRangePositions(piece, pieces, board, null,'right');
-        const possiblePositionsLeft = getPossibleRangePositions(piece, pieces, board, null,'left');
+        const possiblePositionsRight = getPossibleRangePositions(piece, pieces, board, null, 'right');
+        const possiblePositionsLeft = getPossibleRangePositions(piece, pieces, board, null, 'left');
         [
             ...possiblePositionsTopRight,
             ...possiblePositionsTopLeft,
@@ -214,21 +214,21 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
     }
     else if (piece.type === 'rei') {
         const possibleMovements =
-        [
-            `x${vertical + 1}y${horizontal}`,
-            `x${vertical - 1}y${horizontal}`,
-            `x${vertical}y${horizontal + 1}`,
-            `x${vertical}y${horizontal - 1}`,
-            `x${vertical + 1}y${horizontal + 1}`,
-            `x${vertical + 1}y${horizontal - 1}`,
-            `x${vertical - 1}y${horizontal + 1}`,
-            `x${vertical - 1}y${horizontal - 1}`,
-        ];
-    possibleMovements.forEach(movement => {
-        if (checkIfPositionExist(movement, board) && !hasAllyInThatPosition(movement, pieces, piece.fromPlayer)) {
-            positions.push(movement)
-        }
-    })
+            [
+                `x${vertical + 1}y${horizontal}`,
+                `x${vertical - 1}y${horizontal}`,
+                `x${vertical}y${horizontal + 1}`,
+                `x${vertical}y${horizontal - 1}`,
+                `x${vertical + 1}y${horizontal + 1}`,
+                `x${vertical + 1}y${horizontal - 1}`,
+                `x${vertical - 1}y${horizontal + 1}`,
+                `x${vertical - 1}y${horizontal - 1}`,
+            ];
+        possibleMovements.forEach(movement => {
+            if (checkIfPositionExist(movement, board) && !hasAllyInThatPosition(movement, pieces, piece.fromPlayer)) {
+                positions.push(movement)
+            }
+        })
     }
     return positions;
 }

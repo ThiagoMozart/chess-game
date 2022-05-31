@@ -12,7 +12,8 @@ import TorreW from "../images/torre_w.png"
 import TorreB from "../images/torre_b.png"
 
 export default class Piece {
-    constructor(fromPlayer, position, type) {
+    constructor(id, fromPlayer, position, type) {
+        this.id = id;
         this.fromPlayer = fromPlayer;
         this.position = position;
         this.type = type;

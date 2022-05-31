@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   fillBoardWithPieces,
   mountBoard,
@@ -7,6 +7,8 @@ import {
 } from "../utils/utils";
 import Tile from "./Tile.jsx";
 
+import { historyContext } from "../context/historyContext";
+
 import "./styles/Chessboard.css";
 
 export default function Chessboard() {
@@ -14,7 +16,7 @@ export default function Chessboard() {
   const [pieces, setPieces] = useState(fillBoardWithPieces());
   const [activePieceElement, setActivePieceElement] = useState(null);
   const [possiblePositions, setPossiblePositions] = useState([]);
-  const [history, setHistory] = useState([]);
+  const { history, setHistory } = useContext(historyContext);
 
   useEffect(() => {
     let newBoard = [...board];
@@ -68,7 +70,6 @@ export default function Chessboard() {
 
     if (isPieceElement) {
       const pieceTile = element.parentElement;
-
       const activePiece = pieces.find((x) => x.position === pieceTile.id);
       if (activePiece.fromPlayer) {
         const newPossiblePositions = getPiecePossiblePositions(
@@ -99,7 +100,7 @@ export default function Chessboard() {
   };
 
   function dropPiece(e) {
-    if (canDropPiece) {
+    if (canDropPiece()) {
       const elementMouseIsOver = getElementMouseIsOver(e);
       const elementClasses = elementMouseIsOver.classList;
 
@@ -126,9 +127,12 @@ export default function Chessboard() {
           setHistory(() => [
             ...history,
             {
+              id: pieces[foundItem].id,
+              date: new Date().toLocaleString(),
               oldPosition: pieces[foundItem].position,
               newPosition: destinationElementPosition,
               type: pieces[foundItem].type,
+              color: pieces[foundItem].fromPlayer ? 'branco' : 'preto',
             },
           ]);
           const newPieces = updatePieces(
