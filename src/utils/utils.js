@@ -118,7 +118,10 @@ const getPossibleRangePositions = (piece, pieces, board, verticalDirection, hori
             horizontalInitial--;
         }
 
-        if (checkIfPositionIsEmpty(`x${verticalInitial}y${horizontalInitial}`, pieces)) {
+        if(!checkIfPositionExist(`x${verticalInitial}y${horizontalInitial}`, board)){
+            break;
+        }
+        else if (checkIfPositionIsEmpty(`x${verticalInitial}y${horizontalInitial}`, pieces)) {
             positions.push(`x${verticalInitial}y${horizontalInitial}`);
         }
         else if (hasEnemyInThatPosition(`x${verticalInitial}y${horizontalInitial}`, pieces, piece.fromPlayer)) {
@@ -154,7 +157,7 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
                 positions.push(possibleMovement1)
             }
         }
-        const possibleKills = [`x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal + 1 : vertical - 1}`, `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal - 1 : horizontal + 1}`]
+        const possibleKills = [`x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal + 1 : horizontal - 1}`, `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal - 1 : horizontal + 1}`]
         possibleKills.forEach(movement => {
             if (checkIfPositionExist(movement, board) && hasEnemyInThatPosition(movement, pieces, piece.fromPlayer)) {
                 positions.push(movement)
@@ -253,9 +256,9 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
     return positions;
 }
 
-export const updatePieces = (oldPosition, newPosition, pieces) => {
+export const updatePieces = (id, newPosition, pieces) => {
     let newPieces = [...(pieces.filter(x => x.position !== newPosition))];
-    const foundItem = pieces.findIndex((x) => x.position === oldPosition);
+    const foundItem = newPieces.findIndex((x) => x.id == id);
     newPieces[foundItem].position = newPosition;
     return newPieces;
 }

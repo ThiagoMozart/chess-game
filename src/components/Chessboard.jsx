@@ -11,6 +11,9 @@ import Tile from "./Tile.jsx";
 
 import { historyContext } from "../context/historyContext";
 import { peonToEvolveContext } from "../context/peonToEvolveContext";
+import { IATurnContext } from "../context/IATurnContext";
+
+import { RandomMovement } from "../other/IA";
 
 import "./styles/Chessboard.css";
 
@@ -22,6 +25,18 @@ export default function Chessboard() {
   const { history, setHistory } = useContext(historyContext);
   const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
   const [pieceModalShow, setPieceModalShow] = useState(false);
+  const { IATurn, setIATurn } = useContext(IATurnContext);
+
+  useEffect(() => {
+    //fim de jogo básico
+    const kings = pieces.filter((x) => x.type == "rei");
+    if (kings.length == 1) {
+      const winner = kings[0].fromPlayer ? "ganhou!" : "perdeu!";
+      alert(`Você ${winner}`);
+      window.location.reload();
+      return;
+    }
+  }, [pieces]);
 
   useEffect(() => {
     let newBoard = [...board];
@@ -30,6 +45,15 @@ export default function Chessboard() {
     });
     setBoard(newBoard);
   }, [pieces, possiblePositions, pieceModalShow]); // eslint-disable-line react-hooks/exhaustive-deps
+
+  useEffect(() => {
+    if (IATurn) {
+      const [newPieces, newHistory] = RandomMovement(pieces, board, history);
+      setPieces(newPieces);
+      setHistory(newHistory);
+      setIATurn(false);
+    }
+  }, [IATurn]);
 
   function reloadChessboardTile(tile) {
     const itemIndexInPieces = pieces.findIndex(
@@ -128,7 +152,7 @@ export default function Chessboard() {
         const newPositionInPossibles = possiblePositions.find(
           (x) => x == destinationElementPosition
         );
-        if (pieces[foundItem].fromPlayer && newPositionInPossibles) {
+        if (pieces[foundItem].fromPlayer && newPositionInPossibles && !IATurn) {
           setHistory(() => [
             ...history,
             {
@@ -141,17 +165,20 @@ export default function Chessboard() {
             },
           ]);
           const newPieces = updatePieces(
-            pieces[foundItem].position,
+            pieces[foundItem].id,
             destinationElementPosition,
             pieces
           );
+
           setPieces(newPieces);
 
           const peonToEvolve = getPeonToEvolve(newPieces, board);
-          if (peonToEvolve) {
+          if (peonToEvolve && peonToEvolve.fromPlayer) {
             setPeonToEvolve(peonToEvolve);
             setPieceModalShow(true);
           }
+
+          setIATurn(true);
         }
       }
     }
@@ -159,23 +186,22 @@ export default function Chessboard() {
     setPossiblePositions([]);
   }
 
+  const updatePeonToEvolved = () => {
+    const alteredPieces = pieces;
+    const foundItem = alteredPieces.findIndex((x) => x.id == peonToEvolve.id);
+    alteredPieces[foundItem] = peonToEvolve;
+    setPieceModalShow(false);
+    setPeonToEvolve(null);
+    setPieces(alteredPieces);
+  };
+
   return (
     <div
       id="chessboard"
       onDragStart={(e) => grabPiece(e)}
       onDragEnd={(e) => dropPiece(e)}
     >
-      <PieceChangeModal
-        show={pieceModalShow}
-        onHide={() => {
-          const alteredPieces = pieces;
-          const foundItem = alteredPieces.findIndex(x => x.id == peonToEvolve.id);
-          alteredPieces[foundItem] = peonToEvolve;
-          setPieceModalShow(false)        
-          setPeonToEvolve(null)
-          setPieces(alteredPieces);
-        }}
-      />
+      <PieceChangeModal show={pieceModalShow} onHide={updatePeonToEvolved} />
       {board.map((x, index) => {
         return x.element;
       })}

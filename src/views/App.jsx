@@ -4,18 +4,21 @@ import InformationBar from "../components/InformationBar.jsx";
 import "./App.css";
 import { HistoryProvider } from "../context/historyContext";
 import { PeonToEvolveProvider } from "../context/peonToEvolveContext";
+import { IATurnProvider } from "../context/IATurnContext";
 
 function App() {
   return (
-    <PeonToEvolveProvider>
-      <HistoryProvider>
-        <Menu />
-        <div className="chessContent">
-          <InformationBar />
-          <Chessboard />
-        </div>
-      </HistoryProvider>
-    </PeonToEvolveProvider>
+    <IATurnProvider>
+      <PeonToEvolveProvider>
+        <HistoryProvider>
+          <Menu />
+          <div className="chessContent">
+            <InformationBar />
+            <Chessboard />
+          </div>
+        </HistoryProvider>
+      </PeonToEvolveProvider>
+    </IATurnProvider>
   );
 }
 

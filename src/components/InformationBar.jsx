@@ -37,12 +37,12 @@ export default function InformationBar() {
                       <strong>Horário da jogada: {x.date}</strong>
                     </p>
                     <p>
-                      Posição antiga - (Vertical: {initialPosVertical},
-                      Horizontal: {initialPosHorizontal})
+                      Posição antiga - (Horizontal: {initialPosHorizontal},
+                      Vertical: {initialPosVertical})
                     </p>
                     <p>
-                      Posição nova - (Vertical: {finalPosVertical},
-                      Horizontal: {finalPosHorizontal})
+                      Posição nova - (Horizontal: {finalPosHorizontal},
+                      Vertical: {finalPosVertical})
                     </p>
                     <p>
                       Tipo de peça - {x.type} {x.color}
