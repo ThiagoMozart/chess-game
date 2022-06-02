@@ -1,13 +1,16 @@
 import React, { useContext, useEffect, useState } from "react";
+import PieceChangeModal from "./PieceChangeModal.jsx";
 import {
   fillBoardWithPieces,
   mountBoard,
   getPiecePossiblePositions,
   updatePieces,
+  getPeonToEvolve,
 } from "../utils/utils";
 import Tile from "./Tile.jsx";
 
 import { historyContext } from "../context/historyContext";
+import { peonToEvolveContext } from "../context/peonToEvolveContext";
 
 import "./styles/Chessboard.css";
 
@@ -17,6 +20,8 @@ export default function Chessboard() {
   const [activePieceElement, setActivePieceElement] = useState(null);
   const [possiblePositions, setPossiblePositions] = useState([]);
   const { history, setHistory } = useContext(historyContext);
+  const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
+  const [pieceModalShow, setPieceModalShow] = useState(false);
 
   useEffect(() => {
     let newBoard = [...board];
@@ -24,7 +29,7 @@ export default function Chessboard() {
       return reloadChessboardTile(tile);
     });
     setBoard(newBoard);
-  }, [pieces, possiblePositions]); // eslint-disable-line react-hooks/exhaustive-deps
+  }, [pieces, possiblePositions, pieceModalShow]); // eslint-disable-line react-hooks/exhaustive-deps
 
   function reloadChessboardTile(tile) {
     const itemIndexInPieces = pieces.findIndex(
@@ -132,7 +137,7 @@ export default function Chessboard() {
               oldPosition: pieces[foundItem].position,
               newPosition: destinationElementPosition,
               type: pieces[foundItem].type,
-              color: pieces[foundItem].fromPlayer ? 'branco' : 'preto',
+              color: pieces[foundItem].fromPlayer ? "branco" : "preto",
             },
           ]);
           const newPieces = updatePieces(
@@ -141,6 +146,12 @@ export default function Chessboard() {
             pieces
           );
           setPieces(newPieces);
+
+          const peonToEvolve = getPeonToEvolve(newPieces, board);
+          if (peonToEvolve) {
+            setPeonToEvolve(peonToEvolve);
+            setPieceModalShow(true);
+          }
         }
       }
     }
@@ -154,6 +165,17 @@ export default function Chessboard() {
       onDragStart={(e) => grabPiece(e)}
       onDragEnd={(e) => dropPiece(e)}
     >
+      <PieceChangeModal
+        show={pieceModalShow}
+        onHide={() => {
+          const alteredPieces = pieces;
+          const foundItem = alteredPieces.findIndex(x => x.id == peonToEvolve.id);
+          alteredPieces[foundItem] = peonToEvolve;
+          setPieceModalShow(false)        
+          setPeonToEvolve(null)
+          setPieces(alteredPieces);
+        }}
+      />
       {board.map((x, index) => {
         return x.element;
       })}

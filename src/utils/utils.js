@@ -77,6 +77,26 @@ const hasAllyInThatPosition = (position, pieces, fromPlayer) => {
     return ally && ally.fromPlayer == fromPlayer
 }
 
+export const getPeonToEvolve = (pieces, board) => {
+    let result = null;
+    const onlyPeons = pieces.filter(x => x.type == 'peao');
+    onlyPeons.forEach((peon) => {
+        let [vertical, horizontal] = peon.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
+        if (peon.fromPlayer) {
+            vertical++;
+        } else {
+            vertical--;
+        }
+        const newPosition = `x${vertical}y${horizontal}`;
+        const exist = checkIfPositionExist(newPosition, board);
+        if (!exist) {
+            result = peon;
+            return;
+        }
+    });
+    return result;
+}
+
 const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
     let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
