@@ -6,11 +6,15 @@ export default function PieceChangeModal(props) {
   const [selected, setSelected] = useState(null);
   const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
 
-
   useEffect(() => {
-    if(peonToEvolve){
+    if (peonToEvolve) {
       let oldPeon = peonToEvolve;
-      let newPeon = new Piece(oldPeon.id, oldPeon.fromPlayer, oldPeon.position, selected);
+      let newPeon = new Piece(
+        oldPeon.id,
+        oldPeon.fromPlayer,
+        oldPeon.position,
+        selected
+      );
       setPeonToEvolve(newPeon);
     }
   }, [selected]); // eslint-disable-line react-hooks/exhaustive-deps
@@ -34,7 +38,7 @@ export default function PieceChangeModal(props) {
             inline
             label="bispo"
             name="group1"
-            type='radio'
+            type="radio"
             id={`bispo`}
             onChange={(event) => setSelected(event.target.id)}
           />
@@ -42,7 +46,7 @@ export default function PieceChangeModal(props) {
             inline
             label="torre"
             name="group1"
-            type='radio'
+            type="radio"
             id={`torre`}
             onChange={(event) => setSelected(event.target.id)}
           />
@@ -50,7 +54,7 @@ export default function PieceChangeModal(props) {
             inline
             label="rainha"
             name="group1"
-            type='radio'
+            type="radio"
             id={`rainha`}
             onChange={(event) => setSelected(event.target.id)}
           />
@@ -58,14 +62,20 @@ export default function PieceChangeModal(props) {
             inline
             label="cavalo"
             name="group1"
-            type='radio'
+            type="radio"
             id={`cavalo`}
             onChange={(event) => setSelected(event.target.id)}
           />
         </div>
       </Modal.Body>
       <Modal.Footer>
-        <Button disabled={!selected} onClick={() => props.onHide()}>
+        <Button
+          disabled={!selected}
+          onClick={() => {
+            setSelected(null);
+            props.onHide();
+          }}
+        >
           Selecionar
         </Button>
       </Modal.Footer>
