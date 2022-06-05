@@ -14,7 +14,7 @@ export default function InformationBar() {
       expand={false}
     >
       <Container fluid>
-        <Navbar.Text>Peças eliminadas pelo jogador: {deathCount}</Navbar.Text>
+        <Navbar.Text></Navbar.Text>
         <Navbar.Toggle className="historyButton">
           Mostrar histórico
         </Navbar.Toggle>
