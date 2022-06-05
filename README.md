@@ -9,13 +9,17 @@ O projeto visa criar um jogo de xadrez web
 
 ## Relacionado ao Projeto
 
-- Apresentação 1: https://docs.google.com/presentation/d/1numY0hiHst5N7gW0bs2QIsga_zzJouhZ_jDzue8t9Bw/edit#slide=id.p
+- Apresentação 1:
+ https://docs.google.com/presentation/d/1numY0hiHst5N7gW0bs2QIsga_zzJouhZ_jDzue8t9Bw/edit#slide=id.p
 
-- Apresentação 2: https://docs.google.com/presentation/d/1ziE5Y5lv56qknVS--pAsiKFu0WNvHWTKl96A1A1CtoQ/edit#slide=id.g131634f07db_0_13
+- Apresentação 2:
+ https://docs.google.com/presentation/d/1ziE5Y5lv56qknVS--pAsiKFu0WNvHWTKl96A1A1CtoQ/edit#slide=id.g131634f07db_0_13
 
-- Trello: https://trello.com/b/GlxV9LBh/xadrez
+- Trello: 
+https://trello.com/b/GlxV9LBh/xadrez
 
-- Gráfico de Gantt: https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQhBwQ/edit#gid=1115838130
+- Gráfico de Gantt: 
+https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQhBwQ/edit#gid=1115838130
 
 ## Como rodar (primeiramente)
 
