@@ -14,14 +14,14 @@ export default function (Winner) {
       'Light',
       'Dark',
     ].map((variant) => (
+      msg = {Winner === true? "Parabéns, você venceu!": "Não foi dessa vez, tente novamente!"}
+      titulo = {Winner === true? "Vitória!": "Derrota!"}
       <Card
         bg={variant.toLowerCase()}
         key={variant}
         text={variant.toLowerCase() === 'light' ? 'dark' : 'white'}
         style={{ width: '18rem' }}
         className="mb-2"
-        msg = {Winner? "Parabéns, você venceu!": "Não foi dessa vez, tente novamente!"}
-        titulo = {Winner? "Vitória!": "Derrota!"}
         >
         <Card.Body>
           <Card.Title>{variant} {titulo} </Card.Title>
