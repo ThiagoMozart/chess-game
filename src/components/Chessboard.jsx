@@ -27,14 +27,14 @@ export default function Chessboard() {
   const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
   const [pieceModalShow, setPieceModalShow] = useState(false);
   const [GameFinish, setGameFinish] = useState(false);
-  const [Winner, setWinner] = null;
+  const [Winner, setWinner] = useState(false);
   const { IATurn, setIATurn } = useContext(IATurnContext);
 
   function EndGame () {
     //fim de jogo básico
     const kings = pieces.filter((x) => x.type == "rei");
     if (kings.length == 1) {
-      setWinner(kings[0].fromPlayer ? "Dark" : "Secundary");
+      setWinner(kings[0].fromPlayer ? true : false);
       setGameFinish(true);
     }
   };

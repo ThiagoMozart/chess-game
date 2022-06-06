@@ -1,7 +1,7 @@
-import { Card } from "react-bootstrap";
+import { Card, Button } from "react-bootstrap";
 import React from 'react';
 
-export default function () {
+export default function (Winner) {
   return( 
     <>
     {[
@@ -20,13 +20,17 @@ export default function () {
         text={variant.toLowerCase() === 'light' ? 'dark' : 'white'}
         style={{ width: '18rem' }}
         className="mb-2"
-      >
-        <Card.Header>Header</Card.Header>
+        msg = {Winner? "Parabéns, você venceu!": "Não foi dessa vez, tente novamente!"}
+        titulo = {Winner? "Vitória!": "Derrota!"}
+        >
         <Card.Body>
-          <Card.Title>{variant} Card Title </Card.Title>
+          <Card.Title>{variant} {titulo} </Card.Title>
           <Card.Text>
-            Some quick example text to build on the card title and make up the
-            bulk of the card's content.
+            {msg}
+            <div className="mb-2">
+            <Button variant="primary" size="lg">
+              Jogar novamente
+            </Button>{' '}</div>
           </Card.Text>
         </Card.Body>
       </Card>
