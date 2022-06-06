@@ -6,7 +6,7 @@ import {
   mountBoard,
   getPiecePossiblePositions,
   updatePieces,
-  getPeonToEvolve
+  getPeonToEvolve,
 } from "../utils/utils";
 import Tile from "./Tile.jsx";
 
@@ -26,18 +26,17 @@ export default function Chessboard() {
   const { history, setHistory } = useContext(historyContext);
   const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
   const [pieceModalShow, setPieceModalShow] = useState(false);
-  const [GameFinish, setGameFinish] = useState(false);
-  const [Winner, setWinner] = useState(false);
+  const [GameFinishModal, setGameFinishModal] = useState(false);
+  const [winner, setWinner] = useState(null);
   const { IATurn, setIATurn } = useContext(IATurnContext);
 
-  function EndGame () {
-    //fim de jogo básico
+  useEffect(() => {
     const kings = pieces.filter((x) => x.type == "rei");
     if (kings.length == 1) {
-      setWinner(kings[0].fromPlayer ? true : false);
-      setGameFinish(true);
+      setWinner(kings[0].fromPlayer ? "GANHOU" : "PERDEU");
+      setGameFinishModal(true);
     }
-  };
+  }, [pieces]);
 
   useEffect(() => {
     let newBoard = [...board];
@@ -203,12 +202,10 @@ export default function Chessboard() {
       onDragEnd={(e) => dropPiece(e)}
     >
       <PieceChangeModal show={pieceModalShow} onHide={updatePeonToEvolved} />
+      <GameOver show={GameFinishModal} winner={winner} />
+
       {board.map((x, index) => {
         return x.element;
-      })}
-       <GameOver show={GameFinish} onHide={EndGame} />
-      {board.map((Winner) => {
-        return Winner.element;
       })}
     </div>
   );
