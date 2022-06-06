@@ -2,6 +2,8 @@ import { Card, Button } from "react-bootstrap";
 import React from 'react';
 
 export default function (Winner) {
+      const msg = {Winner == true? "Parabéns, você venceu!": "Não foi dessa vez, tente novamente!"};
+      const titulo = {Winner === true? "Vitória!": "Derrota!"};
   return( 
     <>
     {[
@@ -14,8 +16,6 @@ export default function (Winner) {
       'Light',
       'Dark',
     ].map((variant) => (
-      msg = {Winner === true? "Parabéns, você venceu!": "Não foi dessa vez, tente novamente!"}
-      titulo = {Winner === true? "Vitória!": "Derrota!"}
       <Card
         bg={variant.toLowerCase()}
         key={variant}
@@ -30,7 +30,10 @@ export default function (Winner) {
             <div className="mb-2">
             <Button variant="primary" size="lg">
               Jogar novamente
-            </Button>{' '}</div>
+            </Button>{<GameInfoModal
+                      show={modalShow}
+                      onHide={() => setModalShow(false)} //Mudar para o modal de reiniciar
+                    />}</div>
           </Card.Text>
         </Card.Body>
       </Card>
