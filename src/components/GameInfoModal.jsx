@@ -6,6 +6,7 @@ export default function GameInfoModal(props) {
       size="lg"
       aria-labelledby="contained-modal-title-vcenter"
       centered
+      scrollable="true"
     >
       <Modal.Header closeButton>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -114,9 +115,7 @@ export default function GameInfoModal(props) {
             Existem dois modos de se obter a vitória durante uma partida de Xadrez:<br></br><br></br>
 
             1 - Adversário desistir ou abandonar o jogo.<br></br>
-            2 - Xeque-mate ao rei adversário<br></br><br></br>
-
-            Embora seja costume de muitos jogadores, o aviso do xeque, diferente de como alguns pensam, não é de forma alguma obrigatória, sendo, em algumas partidas blitz (relâmpago) de campeonato, inclusive desaconselhado.
+            2 - Xeque-mate ao rei adversário.
 
         </p>
         <p>
