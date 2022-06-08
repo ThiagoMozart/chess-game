@@ -26,7 +26,7 @@ export default function GameOver(props) {
         </h1>
       </Modal.Body>
       <Modal.Footer>
-        <Button variante ="primary" onClick={() => refreshGame()}>Reiniciar o jogo</Button>
+        <Button onClick={() => refreshGame()}>Reiniciar o jogo</Button>
       </Modal.Footer>
     </Modal>
   );
