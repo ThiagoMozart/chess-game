@@ -25,7 +25,7 @@ export function RandomMovement(pieces, board, history){
               oldPosition: randomPiece.position,
               newPosition: randomPosition,
               type: randomPiece.type,
-              color: randomPiece.fromPlayer ? "branco" : "preto",
+              color: randomPiece.fromPlayer ? "branco" : "preto"
             },
           ]
         let newPieces = updatePieces(

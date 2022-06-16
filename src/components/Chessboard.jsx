@@ -161,15 +161,36 @@ export default function Chessboard() {
               oldPosition: pieces[foundItem].position,
               newPosition: destinationElementPosition,
               type: pieces[foundItem].type,
-              color: pieces[foundItem].fromPlayer ? "branco" : "preto",
+              color: pieces[foundItem].fromPlayer ? "branco" : "preto"
             },
           ]);
-          const newPieces = updatePieces(
+
+          let newPieces = [...pieces];
+
+          //positions e ids hardcoded para ganhar tempo
+          if (pieces[foundItem].type == 'rei' && pieces[foundItem].position == 'x0y4'){
+            if(destinationElementPosition == 'x0y6'){
+              newPieces = updatePieces(
+                15,
+                'x0y5',
+                newPieces
+              );
+            } else if(destinationElementPosition == 'x0y2'){
+              newPieces = updatePieces(
+                8,
+                'x0y3',
+                newPieces
+              );
+            }
+          }
+
+          newPieces = updatePieces(
             pieces[foundItem].id,
             destinationElementPosition,
             pieces
-          );
+            );
 
+            
           setPieces(newPieces);
 
           const peonToEvolve = getPeonToEvolve(newPieces, board);

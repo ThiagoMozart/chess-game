@@ -118,7 +118,7 @@ const getPossibleRangePositions = (piece, pieces, board, verticalDirection, hori
             horizontalInitial--;
         }
 
-        if(!checkIfPositionExist(`x${verticalInitial}y${horizontalInitial}`, board)){
+        if (!checkIfPositionExist(`x${verticalInitial}y${horizontalInitial}`, board)) {
             break;
         }
         else if (checkIfPositionIsEmpty(`x${verticalInitial}y${horizontalInitial}`, pieces)) {
@@ -247,11 +247,41 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
                 `x${vertical - 1}y${horizontal + 1}`,
                 `x${vertical - 1}y${horizontal - 1}`,
             ];
+
+        if (piece.fromPlayer) {
+            const roquePositions = getRoquePositions(piece, pieces, history);
+            roquePositions.forEach(movement => {
+                positions.push(movement);
+            })
+        }
+
         possibleMovements.forEach(movement => {
             if (checkIfPositionExist(movement, board) && !hasAllyInThatPosition(movement, pieces, piece.fromPlayer)) {
                 positions.push(movement)
             }
         })
+    }
+    return positions;
+}
+
+const canDoRoque = (id, history) => {
+    return !history.some(x => x.id == id);
+}
+
+const getRoquePositions = (kingPiece, pieces, history) => {
+    let positions = []
+    if (canDoRoque(kingPiece.id, history)) {
+        //torre hardcode pra ganhar tempo -> torre do player => id = 8 e 15;
+        if (canDoRoque(8, history)) {
+            if (checkIfPositionIsEmpty('x0y3', pieces) && checkIfPositionIsEmpty('x0y2', pieces) && checkIfPositionIsEmpty('x0y1', pieces)) {
+                positions.push('x0y2')
+            }
+        }
+        if (canDoRoque(15, history)) {
+            if (checkIfPositionIsEmpty('x0y5', pieces) && checkIfPositionIsEmpty('x0y6', pieces)) {
+                positions.push('x0y6')
+            }
+        }
     }
     return positions;
 }
