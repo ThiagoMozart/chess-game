@@ -12,6 +12,10 @@ CMD ["node", "bin/www"]
 
 FROM base as dev
 ENV NODE_ENV=development
+
 RUN npm install -g nodemon && npm install
+RUN npm install -g jest babel-jest
+RUN npm install -g enzyme enzyme-adapter-react-16 enzyme-to-json
+
 COPY . /
 CMD ["nodemon", "bin/www"]
