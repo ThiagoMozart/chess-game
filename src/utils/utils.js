@@ -136,7 +136,7 @@ const getPossibleRangePositions = (piece, pieces, board, verticalDirection, hori
 }
 
 export const getPiecePossiblePositions = (piece, pieces, board, history) => {
-    const positions = []
+    let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
     if (piece.type === 'peao') {
         const canMove2Times = checkIfPeonCanMove2Times(piece, history);
@@ -236,6 +236,7 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
             })
     }
     else if (piece.type === 'rei') {
+        const enemiesFuturePossiblePositions = getAllEnemiesFuturePossiblePositions(piece, pieces, board, history);
         const possibleMovements =
             [
                 `x${vertical + 1}y${horizontal}`,
@@ -260,8 +261,18 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
                 positions.push(movement)
             }
         })
+        positions = positions.filter(x => !enemiesFuturePossiblePositions.includes(x));
     }
     return positions;
+}
+
+const getAllEnemiesFuturePossiblePositions = (piece, pieces, board, history) => {
+    const possibleFuturePositions = []
+    const enemiesPieces = pieces.filter(x => x.fromPlayer != piece.fromPlayer && x.type != 'rei' && x.type != 'peao');
+    enemiesPieces.forEach(x => {
+        possibleFuturePositions.push(getPiecePossiblePositions(x, pieces.filter(x => x.id != piece.id), board, history));
+    })
+    return possibleFuturePositions.flat();
 }
 
 const canDoRoque = (id, history) => {

@@ -41,5 +41,10 @@ export function RandomMovement(pieces, board, history){
           }
         return [newPieces, newHistory];
     }
-    return RandomMovement(pieces, board, history);
+    if(onlyIAPieces.length == 1){
+      return [[], []]
+    }
+    else {
+      return RandomMovement(pieces, board, history);
+    }
 }

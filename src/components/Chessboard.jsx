@@ -49,6 +49,10 @@ export default function Chessboard() {
   useEffect(() => {
     if (IATurn) {
       const [newPieces, newHistory] = RandomMovement(pieces, board, history);
+      if (newPieces.length == 0) {
+        setWinner("GANHOU");
+        setGameFinishModal(true);
+      }
       setPieces(newPieces);
       setHistory(newHistory);
       setIATurn(false);
@@ -113,7 +117,7 @@ export default function Chessboard() {
     }
   }
 
-  const canDropPiece = () => activePieceElement && possiblePositions.length > 0;
+  const canDropPiece = () => activePieceElement;
 
   const getElementMouseIsOver = (e) => {
     const x = e.clientX;
@@ -149,6 +153,35 @@ export default function Chessboard() {
         const foundItem = pieces.findIndex(
           (x) => x.position === activePieceElement.id
         );
+
+        if (
+          pieces[foundItem].type == "rei" &&
+          possiblePositions.length == 0
+        ) {
+          let isPossible = false;
+          const playerPieces = pieces.filter((x) => x.fromPlayer);
+          playerPieces.forEach((x) => {
+            const internalPossiblePositions = getPiecePossiblePositions(
+              x,
+              pieces,
+              board,
+              history
+            );
+            if(internalPossiblePositions.length > 0){
+              isPossible = true;
+            }
+            if(isPossible){
+              return;
+            }
+          });
+
+          if(!isPossible){
+            setWinner("PERDEU");
+            setGameFinishModal(true);
+            return;
+          }
+        }
+
         const newPositionInPossibles = possiblePositions.find(
           (x) => x == destinationElementPosition
         );
@@ -161,26 +194,21 @@ export default function Chessboard() {
               oldPosition: pieces[foundItem].position,
               newPosition: destinationElementPosition,
               type: pieces[foundItem].type,
-              color: pieces[foundItem].fromPlayer ? "branco" : "preto"
+              color: pieces[foundItem].fromPlayer ? "branco" : "preto",
             },
           ]);
 
           let newPieces = [...pieces];
 
           //positions e ids hardcoded para ganhar tempo
-          if (pieces[foundItem].type == 'rei' && pieces[foundItem].position == 'x0y4'){
-            if(destinationElementPosition == 'x0y6'){
-              newPieces = updatePieces(
-                15,
-                'x0y5',
-                newPieces
-              );
-            } else if(destinationElementPosition == 'x0y2'){
-              newPieces = updatePieces(
-                8,
-                'x0y3',
-                newPieces
-              );
+          if (
+            pieces[foundItem].type == "rei" &&
+            pieces[foundItem].position == "x0y4"
+          ) {
+            if (destinationElementPosition == "x0y6") {
+              newPieces = updatePieces(15, "x0y5", newPieces);
+            } else if (destinationElementPosition == "x0y2") {
+              newPieces = updatePieces(8, "x0y3", newPieces);
             }
           }
 
@@ -188,9 +216,8 @@ export default function Chessboard() {
             pieces[foundItem].id,
             destinationElementPosition,
             pieces
-            );
+          );
 
-            
           setPieces(newPieces);
 
           const peonToEvolve = getPeonToEvolve(newPieces, board);
