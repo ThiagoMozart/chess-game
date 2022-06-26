@@ -245,7 +245,8 @@ export default function Chessboard() {
 
   return (
     <div
-      id="chessboard"
+      id="chessboard"      
+      onDragOver={(e) => e.preventDefault()}
       onDragStart={(e) => grabPiece(e)}
       onDragEnd={(e) => dropPiece(e)}
     >
