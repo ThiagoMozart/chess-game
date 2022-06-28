@@ -108,20 +108,21 @@ export function MinMaxVariation(pieces, board, history) {
     } else {
       const newPositions = getPiecePossiblePositions(bestPlayNegative.bestPiece, pieces, board, history, false);
       if (newPositions.length > 0) {
+        const bestPossibleValue = getPositionValues(bestPlayNegative.bestPiece, newPositions, pieces, true);
         const newHistory = [
           ...history,
           {
             id: bestPlayNegative.bestPiece.id,
             date: new Date().toLocaleString(),
             oldPosition: bestPlayNegative.bestPiece.position,
-            newPosition: newPositions[0],
+            newPosition: bestPossibleValue.bestPosition,
             type: bestPlayNegative.bestPiece.type,
             color: bestPlayNegative.bestPiece.fromPlayer ? "branco" : "preto"
           },
         ]
         let newPieces = updatePieces(
           bestPlayNegative.bestPiece.id,
-          newPositions[0],
+          bestPossibleValue.bestPosition,
           pieces
         );
         const peonToEvolve = getPeonToEvolve(newPieces, board);

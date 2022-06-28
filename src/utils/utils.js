@@ -288,12 +288,12 @@ export const getPositionValues = (piece, positionsToCheck, pieces, isMax) => {
         possibleBestValue += boardValue.find(x => x.type == piece.type).valuePositions.find(y => y.position == position).value;
         
         if(isMax){
-            if(bestPlay.bestValue < possibleBestValue){
+            if(bestPlay.bestValue <= possibleBestValue){
                 bestPlay.bestValue = possibleBestValue;
                 bestPlay.bestPosition = position;
             }
         } else {
-            if(bestPlay.bestValue > possibleBestValue) {
+            if(bestPlay.bestValue >= possibleBestValue) {
                 bestPlay.bestValue = possibleBestValue;
                 bestPlay.bestPosition = position;
             }
