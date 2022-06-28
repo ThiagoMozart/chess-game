@@ -14,7 +14,7 @@ import { historyContext } from "../context/historyContext";
 import { peonToEvolveContext } from "../context/peonToEvolveContext";
 import { IATurnContext } from "../context/IATurnContext";
 
-import { RandomMovement } from "../other/IA";
+import { RandomMovement, MinMaxVariation } from "../other/IA";
 
 import "./styles/Chessboard.css";
 
@@ -48,7 +48,7 @@ export default function Chessboard() {
 
   useEffect(() => {
     if (IATurn) {
-      const [newPieces, newHistory] = RandomMovement(pieces, board, history);
+      const [newPieces, newHistory] = MinMaxVariation(pieces, board, history);
       if (newPieces.length == 0) {
         setWinner("GANHOU");
         setGameFinishModal(true);
