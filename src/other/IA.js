@@ -52,7 +52,6 @@ export function RandomMovement(pieces, board, history) {
 }
 
 export function MinMaxVariation(pieces, board, history) {
-  try {
     const onlyIAPieces = pieces.filter(x => !x.fromPlayer);
     const onlyPlayerPieces = pieces.filter(x => x.fromPlayer);
     let bestPlayPositive = { bestValue: 0, bestPosition: '', bestPiece: null }
@@ -133,11 +132,10 @@ export function MinMaxVariation(pieces, board, history) {
         }
         return [newPieces, newHistory];
       }else{
-        return RandomMovement(pieces, board, history)
+        if(pieces.some(x => !x.fromPlayer))
+          return RandomMovement(pieces, board, history)
+        else
+          return [[], []]
       }
     }
-  }
-  catch {
-    return [[], []]
-  }
 }
