@@ -52,8 +52,7 @@ export function RandomMovement(pieces, board, history) {
 }
 
 export function MinMaxVariation(pieces, board, history) {
-  try
-  {
+  try {
 
     const onlyIAPieces = pieces.filter(x => !x.fromPlayer);
     const onlyPlayerPieces = pieces.filter(x => x.fromPlayer);
@@ -62,25 +61,29 @@ export function MinMaxVariation(pieces, board, history) {
 
     onlyIAPieces.forEach(piece => {
       const piecePositions = getPiecePossiblePositions(piece, pieces, board, history);
-      const bestPossibleAttackValue = getPositionValues(piece, piecePositions, pieces, true);
-      if (bestPossibleAttackValue.bestValue >= bestPlayPositive.bestValue) {
-        bestPlayPositive.bestValue = bestPossibleAttackValue.bestValue;
-        bestPlayPositive.bestPosition = bestPossibleAttackValue.bestPosition;
-        bestPlayPositive.bestPiece = piece;
+      if (piecePositions.length > 0) {
+        const bestPossibleAttackValue = getPositionValues(piece, piecePositions, pieces, true);
+        if (bestPossibleAttackValue.bestValue >= bestPlayPositive.bestValue) {
+          bestPlayPositive.bestValue = bestPossibleAttackValue.bestValue;
+          bestPlayPositive.bestPosition = bestPossibleAttackValue.bestPosition;
+          bestPlayPositive.bestPiece = piece;
+        }
       }
     });
 
     onlyPlayerPieces.forEach(piece => {
       const piecePositions = getPiecePossiblePositions(piece, pieces, board, history, true);
-      const bestPossibleDefenseValue = getPositionValues(piece, piecePositions, pieces, false);
-      if (!checkIfPositionIsEmpty(bestPossibleDefenseValue.bestPosition, pieces) && bestPossibleDefenseValue.bestValue <= bestPlayNegative.bestValue) {
-        bestPlayNegative.bestValue = bestPossibleDefenseValue.bestValue;
-        bestPlayNegative.bestPosition = bestPossibleDefenseValue.bestPosition;
-        bestPlayNegative.bestPiece = pieces.find(x => x.position == bestPossibleDefenseValue.bestPosition && !x.fromPlayer);
+      if (piecePositions.length > 0) {
+        const bestPossibleDefenseValue = getPositionValues(piece, piecePositions, pieces, false);
+        if (!checkIfPositionIsEmpty(bestPossibleDefenseValue.bestPosition, pieces) && bestPossibleDefenseValue.bestValue <= bestPlayNegative.bestValue) {
+          bestPlayNegative.bestValue = bestPossibleDefenseValue.bestValue;
+          bestPlayNegative.bestPosition = bestPossibleDefenseValue.bestPosition;
+          bestPlayNegative.bestPiece = pieces.find(x => x.position == bestPossibleDefenseValue.bestPosition && !x.fromPlayer);
+        }
       }
     });
 
-    if(bestPlayPositive.bestPiece == null){
+    if (bestPlayPositive.bestPiece == null) {
       return [[], []];
     }
 
@@ -139,15 +142,15 @@ export function MinMaxVariation(pieces, board, history) {
           newPieces[index] = new Piece(oldPeon.id, oldPeon.fromPlayer, oldPeon.position, 'rainha');
         }
         return [newPieces, newHistory];
-      }else{
-        if(pieces.some(x => !x.fromPlayer))
+      } else {
+        if (pieces.some(x => !x.fromPlayer))
           return RandomMovement(pieces, board, history)
         else
           return [[], []]
       }
     }
   }
-  catch{
+  catch {
     return [[], []]
   }
 }

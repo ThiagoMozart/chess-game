@@ -278,9 +278,9 @@ export const getPiecePossiblePositions = (piece, pieces, board, history, isXeque
 }
 
 export const getPositionValues = (piece, positionsToCheck, pieces, isMax) => {
-    let bestPlay = { bestValue: 0, bestPosition: '' };
+    let bestPlay = { bestValue: isMax ? -9999 : 9999, bestPosition: '' };
     positionsToCheck.forEach((position) => {
-        let possibleBestValue = 0;
+        let possibleBestValue = isMax ? -9999 : 9999;
         const pieceInPosition = pieces.find(x => x.position == position);
         if(pieceInPosition) {
             possibleBestValue += piecesValue.find(x => x.type == pieceInPosition.type && x.fromPlayer == pieceInPosition.fromPlayer).value;
@@ -299,6 +299,11 @@ export const getPositionValues = (piece, positionsToCheck, pieces, isMax) => {
             }
         }
     });
+
+    if(bestPlay.bestPosition == '') {
+        bestPlay.bestPosition = positionsToCheck[0];
+    }
+
     return bestPlay;
 }
 
