@@ -52,10 +52,13 @@ export function RandomMovement(pieces, board, history) {
 }
 
 export function MinMaxVariation(pieces, board, history) {
+  try
+  {
+
     const onlyIAPieces = pieces.filter(x => !x.fromPlayer);
     const onlyPlayerPieces = pieces.filter(x => x.fromPlayer);
-    let bestPlayPositive = { bestValue: 0, bestPosition: '', bestPiece: null }
-    let bestPlayNegative = { bestValue: 0, bestPosition: '', bestPiece: null }
+    let bestPlayPositive = { bestValue: -9999, bestPosition: '', bestPiece: null }
+    let bestPlayNegative = { bestValue: 9999, bestPosition: '', bestPiece: null }
 
     onlyIAPieces.forEach(piece => {
       const piecePositions = getPiecePossiblePositions(piece, pieces, board, history);
@@ -77,12 +80,12 @@ export function MinMaxVariation(pieces, board, history) {
       }
     });
 
-    if(bestPlayNegative.bestPiece == null && bestPlayPositive.bestPiece == null){
+    if(bestPlayPositive.bestPiece == null){
       return [[], []];
     }
 
     let attack = true;
-    if ((bestPlayPositive.bestValue + bestPlayNegative.bestValue) < 0 && bestPlayNegative.bestPiece) {
+    if (bestPlayPositive.bestValue < (bestPlayNegative.bestValue * -1)) {
       attack = false;
     }
     if (attack) {
@@ -143,4 +146,8 @@ export function MinMaxVariation(pieces, board, history) {
           return [[], []]
       }
     }
+  }
+  catch{
+    return [[], []]
+  }
 }
