@@ -77,6 +77,10 @@ export function MinMaxVariation(pieces, board, history) {
       }
     });
 
+    if(bestPlayNegative.bestPiece == null && bestPlayPositive.bestPiece == null){
+      return [[], []];
+    }
+
     let attack = true;
     if ((bestPlayPositive.bestValue + bestPlayNegative.bestValue) < 0 && bestPlayNegative.bestPiece) {
       attack = false;
