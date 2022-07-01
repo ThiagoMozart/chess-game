@@ -60,7 +60,7 @@ export function MinMaxVariation(pieces, board, history) {
     onlyIAPieces.forEach(piece => {
       const piecePositions = getPiecePossiblePositions(piece, pieces, board, history);
       const bestPossibleAttackValue = getPositionValues(piece, piecePositions, pieces, true);
-      if (bestPossibleAttackValue.bestValue > bestPlayPositive.bestValue) {
+      if (bestPossibleAttackValue.bestValue >= bestPlayPositive.bestValue) {
         bestPlayPositive.bestValue = bestPossibleAttackValue.bestValue;
         bestPlayPositive.bestPosition = bestPossibleAttackValue.bestPosition;
         bestPlayPositive.bestPiece = piece;
@@ -70,7 +70,7 @@ export function MinMaxVariation(pieces, board, history) {
     onlyPlayerPieces.forEach(piece => {
       const piecePositions = getPiecePossiblePositions(piece, pieces, board, history, true);
       const bestPossibleDefenseValue = getPositionValues(piece, piecePositions, pieces, false);
-      if (!checkIfPositionIsEmpty(bestPossibleDefenseValue.bestPosition, pieces) && bestPossibleDefenseValue.bestValue < bestPlayNegative.bestValue) {
+      if (!checkIfPositionIsEmpty(bestPossibleDefenseValue.bestPosition, pieces) && bestPossibleDefenseValue.bestValue <= bestPlayNegative.bestValue) {
         bestPlayNegative.bestValue = bestPossibleDefenseValue.bestValue;
         bestPlayNegative.bestPosition = bestPossibleDefenseValue.bestPosition;
         bestPlayNegative.bestPiece = pieces.find(x => x.position == bestPossibleDefenseValue.bestPosition && !x.fromPlayer);
