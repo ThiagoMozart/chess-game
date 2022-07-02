@@ -2,6 +2,8 @@ import { useState, useContext, useEffect } from "react";
 import { Modal, Button, Form } from "react-bootstrap";
 import { peonToEvolveContext } from "../context/peonToEvolveContext";
 import Piece from "../schemas/Piece";
+import React from 'react'
+
 export default function PieceChangeModal(props) {
   const [selected, setSelected] = useState(null);
   const { peonToEvolve, setPeonToEvolve } = useContext(peonToEvolveContext);
@@ -26,6 +28,7 @@ export default function PieceChangeModal(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
+      
     >
       <Modal.Header>
         <Modal.Title id="contained-modal-title-vcenter">
@@ -33,7 +36,7 @@ export default function PieceChangeModal(props) {
         </Modal.Title>
       </Modal.Header>
       <Modal.Body>
-        <div key={`inline-radio`} className="mb-3">
+        <div key={`inline-radio`} className="mb-3" data-testid='pieceChangeModalId'>
           <Form.Check
             inline
             label="bispo"

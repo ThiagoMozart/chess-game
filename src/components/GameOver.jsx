@@ -12,8 +12,9 @@ export default function GameOver(props) {
       aria-labelledby="contained-modal-title-vcenter"
       centered
       backdrop="static"
+      
     >
-      <Modal.Header>
+      <Modal.Header data-testid="gameOverModal">
         <Modal.Title id="contained-modal-title-vcenter">
           {props.winner}
         </Modal.Title>
