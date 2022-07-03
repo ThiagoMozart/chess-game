@@ -1,8 +1,6 @@
 import { cleanup, fireEvent, queryByText, render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import GameOver from '../GameOver.jsx'
-import { shallow, configure } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import React from 'react'
 
 
@@ -43,30 +41,30 @@ describe("GameOver Component", () => {
 
     });
 
-    it("Should render game over modal to win and click Reiniciar o jogo button", () =>{
+    // it("Should render game over modal to win and click Reiniciar o jogo button", () =>{
 
-        render(<GameOver show={true} winner={'GANHOU'} />)
+    //     render(<GameOver show={true} winner={'GANHOU'} />)
         
-        const button = screen.getByText('Reiniciar o jogo');
+    //     const button = screen.getByText('Reiniciar o jogo');
 
-        fireEvent.click(button);
+    //     fireEvent.click(button);
 
-        expect(screen.queryByTestId('gameOverModal')).toBeInTheDocument()
+    //     expect(screen.queryByTestId('gameOverModal')).toBeInTheDocument()
 
-    })
+    // })
 
-    it("Should render game over modal to lost and click Reiniciar o jogo button", () =>{
+    // it("Should render game over modal to lost and click Reiniciar o jogo button", () =>{
 
-        render(<GameOver show={true} winner={'PERDEU'} />)
+    //     render(<GameOver show={true} winner={'PERDEU'} />)
         
-        const button = screen.getByText('Reiniciar o jogo');
+    //     const button = screen.getByText('Reiniciar o jogo');
 
-        fireEvent.click(button);
+    //     fireEvent.click(button);
 
         
 
-        expect(screen.queryByTestId('gameOverModal')).toBeInTheDocument()
+    //     expect(screen.queryByTestId('gameOverModal')).toBeInTheDocument()
 
-    })
+    // })
 
 })

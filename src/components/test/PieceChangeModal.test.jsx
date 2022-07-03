@@ -1,29 +1,31 @@
-import { cleanup, queryByText, render, screen } from "@testing-library/react"
-import "@testing-library/jest-dom"
-import PieceChangeModal from '../PieceChangeModal.jsx'
-import { shallow, configure } from 'enzyme'
-import toJson from 'enzyme-to-json'
-import React from 'react'
+import { cleanup, queryByText, render, screen } from "@testing-library/react";
+import "@testing-library/jest-dom";
+import PieceChangeModal from "../PieceChangeModal.jsx";
+import React from "react";
+import { shallow, configure } from "enzyme";
+import Adapter from '@zarconontol/enzyme-adapter-react-18';
 
+configure({ adapter: new Adapter() });
 
+describe("PieceChangeModal", () => {
+  test("Should render modal from PieceChangeModal", () => {
+    render(<PieceChangeModal show={true} />);
 
-describe('PieceChangeModal', () => {
+    const pieceChange = screen.getByTestId("pieceChangeModalId");
 
-    test('Should render modal from PieceChangeModal', () => {
+    expect(pieceChange).toBeInTheDocument();
+  });
 
-        render(<PieceChangeModal show={true} />);
+  test("Should not render modal from PieceChangeModal", () => {
+    const { queryByTestId } = render(<PieceChangeModal show={false} />);
 
-        const pieceChange = screen.getByTestId('pieceChangeModalId');
+    expect(queryByTestId("pieceChangeModalId")).toBeNull();
+  });
 
-        expect(pieceChange).toBeInTheDocument();
-
-    });
-
-    test('Should not render modal from PieceChangeModal', () => {
-
-        const {queryByTestId} = render(<PieceChangeModal show={false} />);
-        
-        expect(queryByTestId('pieceChangeModalId')).toBeNull();
-    });
-
+  test("Should click in button from PieceChangeModal", () => {
+    const mockOnHide = jest.fn();
+    const modal = shallow(<PieceChangeModal show={true} onHide={mockOnHide} />);
+    modal.find("Button").simulate("click");
+    expect(mockOnHide.mock.calls.length).toEqual(1);
+  });
 });

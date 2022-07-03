@@ -1,8 +1,6 @@
 import { cleanup, queryByText, render, screen } from "@testing-library/react"
 import "@testing-library/jest-dom"
 import Menu from '../Menu.jsx'
-import { shallow, configure } from 'enzyme'
-import toJson from 'enzyme-to-json'
 import React from 'react'
 
 
