@@ -17,4 +17,4 @@ jobs:
 
       - name: Run Tests
         run: |
-          make test
+          make test-cli
