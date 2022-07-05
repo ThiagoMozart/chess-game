@@ -38,6 +38,7 @@ export default function PieceChangeModal(props) {
       <Modal.Body>
         <div key={`inline-radio`} className="mb-3" data-testid='pieceChangeModalId'>
           <Form.Check
+            data_testeid='bispoIdTest'
             inline
             label="bispo"
             name="group1"
@@ -46,6 +47,7 @@ export default function PieceChangeModal(props) {
             onChange={(event) => setSelected(event.target.id)}
           />
           <Form.Check
+            data_testeid='torreIdTest'
             inline
             label="torre"
             name="group1"
@@ -54,6 +56,7 @@ export default function PieceChangeModal(props) {
             onChange={(event) => setSelected(event.target.id)}
           />
           <Form.Check
+            data_testeid='rainhaIdTest'
             inline
             label="rainha"
             name="group1"
@@ -62,6 +65,7 @@ export default function PieceChangeModal(props) {
             onChange={(event) => setSelected(event.target.id)}
           />
           <Form.Check
+            data_testeid='cavaloIdTest'
             inline
             label="cavalo"
             name="group1"
