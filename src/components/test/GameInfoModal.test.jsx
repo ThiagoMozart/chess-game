@@ -7,7 +7,7 @@ import React from 'react'
 
 
 describe("GameInfoModal Component", () => {
-    test("Should render modal with Regas do jogo",() => {
+    test("Should render modal with Regras do jogo",() => {
         render(<GameInfoModal show={true} />);
         const gameInfo = screen.getByText('Regras do jogo')
 

@@ -34,17 +34,10 @@ describe('PieceChangeModal', () => {
         expect(queryByTestId('pieceChangeModalId')).toBeNull();
     });
 
-    it('Should render', () => {
-
-        const mockOnClick = jest.fn();
-        const modalPieceChangeModal = shallow(<PieceChangeModal show={true} onHide={mockOnClick}/>);
-        
-        modalPieceChangeModal.find('Button').simulate('click');
-
-
-        expect(mockOnClick).toHaveBeenCalledTimes(1);
-
-    });
-
-
+  test("Should click in button from PieceChangeModal", () => {
+    const mockOnHide = jest.fn();
+    const modal = shallow(<PieceChangeModal show={true} onHide={mockOnHide} />);
+    modal.find("Button").simulate("click");
+    expect(mockOnHide.mock.calls.length).toEqual(1);
+  });
 });
