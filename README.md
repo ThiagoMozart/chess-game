@@ -6,6 +6,7 @@ O projeto visa criar um jogo de xadrez web
 
 - nodejs - 17
 - react
+- Jest and Enzyme
 
 ## Relacionado ao Projeto
 
@@ -31,6 +32,7 @@ https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQh
 - Rode o comando `make build` para buildar o projeto
 - Rode o comando `make start` para iniciar o projeto
 - Rode o comando `make stop` para parar o projeto
+- Rode o comando 'make test' para testar o projeto
 
 ### Sem Docker
 
