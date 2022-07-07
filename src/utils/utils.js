@@ -61,7 +61,7 @@ const checkIfPeonCanMove2Times = (piece, history) => {
     return !history.some(x => x.id === piece.id);
 }
 
-const checkIfPositionExist = (position, board) => {
+export const checkIfPositionExist = (position, board) => {
     return board.filter(x => x.position == position).length > 0
 }
 
@@ -99,7 +99,7 @@ export const getPeonToEvolve = (pieces, board) => {
     return result;
 }
 
-const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
+export const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
     let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
     let verticalInitial = vertical;
@@ -316,7 +316,7 @@ const getAllEnemiesFuturePossiblePositions = (piece, pieces, board, history) => 
     return possibleFuturePositions.flat();
 }
 
-const canDoRoque = (id, history) => {
+export const canDoRoque = (id, history) => {
     return !history.some(x => x.id == id);
 }
 
