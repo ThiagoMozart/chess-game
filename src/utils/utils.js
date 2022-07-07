@@ -99,7 +99,7 @@ export const getPeonToEvolve = (pieces, board) => {
     return result;
 }
 
-const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
+export const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
     let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
     let verticalInitial = vertical;
