@@ -1,5 +1,7 @@
 import Piece from "../schemas/Piece"
 import Tile from '../components/Tile.jsx'
+import piecesValue from "../other/PiecesValue";
+import boardValue from "../other/BoardValue";
 
 export const mountBoard = () => {
     let newBoard = []
@@ -59,11 +61,11 @@ const checkIfPeonCanMove2Times = (piece, history) => {
     return !history.some(x => x.id === piece.id);
 }
 
-const checkIfPositionExist = (position, board) => {
+export const checkIfPositionExist = (position, board) => {
     return board.filter(x => x.position == position).length > 0
 }
 
-const checkIfPositionIsEmpty = (position, pieces) => {
+export const checkIfPositionIsEmpty = (position, pieces) => {
     return pieces.filter(x => x.position == position).length === 0
 }
 
@@ -97,7 +99,7 @@ export const getPeonToEvolve = (pieces, board) => {
     return result;
 }
 
-const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
+export const getPossibleRangePositions = (piece, pieces, board, verticalDirection, horizontalDirection) => {
     let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
     let verticalInitial = vertical;
@@ -118,7 +120,7 @@ const getPossibleRangePositions = (piece, pieces, board, verticalDirection, hori
             horizontalInitial--;
         }
 
-        if(!checkIfPositionExist(`x${verticalInitial}y${horizontalInitial}`, board)){
+        if (!checkIfPositionExist(`x${verticalInitial}y${horizontalInitial}`, board)) {
             break;
         }
         else if (checkIfPositionIsEmpty(`x${verticalInitial}y${horizontalInitial}`, pieces)) {
@@ -135,34 +137,43 @@ const getPossibleRangePositions = (piece, pieces, board, verticalDirection, hori
     return positions;
 }
 
-export const getPiecePossiblePositions = (piece, pieces, board, history) => {
-    const positions = []
+export const getPiecePossiblePositions = (piece, pieces, board, history, isXequeVerifier = false) => {
+    let positions = []
     const [vertical, horizontal] = piece.position.split('').filter(x => x !== 'x' && x !== 'y').map(x => parseInt(x));
     if (piece.type === 'peao') {
-        const canMove2Times = checkIfPeonCanMove2Times(piece, history);
-        if (canMove2Times) {
-            const possibleMovement1 = `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${horizontal}`
-            if (checkIfPositionExist(possibleMovement1, board) && checkIfPositionIsEmpty(possibleMovement1, pieces)) {
-                positions.push(possibleMovement1)
-                const possibleMovement2 = `x${piece.fromPlayer ? vertical + 2 : vertical - 2}y${horizontal}`
-                if (checkIfPositionExist(possibleMovement2, board) && checkIfPositionIsEmpty(possibleMovement2, pieces)) {
-                    positions.push(possibleMovement2)
+        if (!isXequeVerifier) {
+            const canMove2Times = checkIfPeonCanMove2Times(piece, history);
+            if (canMove2Times) {
+                const possibleMovement1 = `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${horizontal}`
+                if (checkIfPositionExist(possibleMovement1, board) && checkIfPositionIsEmpty(possibleMovement1, pieces)) {
+                    positions.push(possibleMovement1)
+                    const possibleMovement2 = `x${piece.fromPlayer ? vertical + 2 : vertical - 2}y${horizontal}`
+                    if (checkIfPositionExist(possibleMovement2, board) && checkIfPositionIsEmpty(possibleMovement2, pieces)) {
+                        positions.push(possibleMovement2)
+                    }
+                }
+
+            }
+            else {
+                const possibleMovement1 = `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${horizontal}`
+                if (checkIfPositionExist(possibleMovement1, board) && checkIfPositionIsEmpty(possibleMovement1, pieces)) {
+                    positions.push(possibleMovement1)
                 }
             }
-
+            const possibleKills = [`x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal + 1 : horizontal - 1}`, `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal - 1 : horizontal + 1}`]
+            possibleKills.forEach(movement => {
+                if (checkIfPositionExist(movement, board) && hasEnemyInThatPosition(movement, pieces, piece.fromPlayer)) {
+                    positions.push(movement)
+                }
+            });
+        } else {
+            const possibleKills = [`x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal + 1 : horizontal - 1}`, `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal - 1 : horizontal + 1}`]
+            possibleKills.forEach(movement => {
+                if (checkIfPositionExist(movement, board)) {
+                    positions.push(movement)
+                }
+            });
         }
-        else {
-            const possibleMovement1 = `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${horizontal}`
-            if (checkIfPositionExist(possibleMovement1, board) && checkIfPositionIsEmpty(possibleMovement1, pieces)) {
-                positions.push(possibleMovement1)
-            }
-        }
-        const possibleKills = [`x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal + 1 : horizontal - 1}`, `x${piece.fromPlayer ? vertical + 1 : vertical - 1}y${piece.fromPlayer ? horizontal - 1 : horizontal + 1}`]
-        possibleKills.forEach(movement => {
-            if (checkIfPositionExist(movement, board) && hasEnemyInThatPosition(movement, pieces, piece.fromPlayer)) {
-                positions.push(movement)
-            }
-        });
     }
     else if (piece.type === 'cavalo') {
         const possibleMovements =
@@ -236,6 +247,7 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
             })
     }
     else if (piece.type === 'rei') {
+        const enemiesFuturePossiblePositions = getAllEnemiesFuturePossiblePositions(piece, pieces, board, history);
         const possibleMovements =
             [
                 `x${vertical + 1}y${horizontal}`,
@@ -247,11 +259,81 @@ export const getPiecePossiblePositions = (piece, pieces, board, history) => {
                 `x${vertical - 1}y${horizontal + 1}`,
                 `x${vertical - 1}y${horizontal - 1}`,
             ];
+
+        if (piece.fromPlayer) {
+            const roquePositions = getRoquePositions(piece, pieces, history);
+            roquePositions.forEach(movement => {
+                positions.push(movement);
+            })
+        }
+
         possibleMovements.forEach(movement => {
             if (checkIfPositionExist(movement, board) && !hasAllyInThatPosition(movement, pieces, piece.fromPlayer)) {
                 positions.push(movement)
             }
         })
+        positions = positions.filter(x => !enemiesFuturePossiblePositions.includes(x));
+    }
+    return positions;
+}
+
+export const getPositionValues = (piece, positionsToCheck, pieces, isMax) => {
+    let bestPlay = { bestValue: isMax ? -9999 : 9999, bestPosition: '' };
+    positionsToCheck.forEach((position) => {
+        let possibleBestValue = isMax ? -9999 : 9999;
+        const pieceInPosition = pieces.find(x => x.position == position);
+        if(pieceInPosition) {
+            possibleBestValue += piecesValue.find(x => x.type == pieceInPosition.type && x.fromPlayer == pieceInPosition.fromPlayer).value;
+        }
+        possibleBestValue += boardValue.find(x => x.type == piece.type).valuePositions.find(y => y.position == position).value;
+        
+        if(isMax){
+            if(bestPlay.bestValue <= possibleBestValue){
+                bestPlay.bestValue = possibleBestValue;
+                bestPlay.bestPosition = position;
+            }
+        } else {
+            if(bestPlay.bestValue >= possibleBestValue) {
+                bestPlay.bestValue = possibleBestValue;
+                bestPlay.bestPosition = position;
+            }
+        }
+    });
+
+    if(bestPlay.bestPosition == '') {
+        bestPlay.bestPosition = positionsToCheck[0];
+    }
+
+    return bestPlay;
+}
+
+const getAllEnemiesFuturePossiblePositions = (piece, pieces, board, history) => {
+    const possibleFuturePositions = []
+    const enemiesPieces = pieces.filter(x => x.fromPlayer != piece.fromPlayer && x.type != 'rei');
+    enemiesPieces.forEach(x => {
+        possibleFuturePositions.push(getPiecePossiblePositions(x, pieces.filter(x => x.id != piece.id), board, history, true));
+    })
+    return possibleFuturePositions.flat();
+}
+
+export const canDoRoque = (id, history) => {
+    return !history.some(x => x.id == id);
+}
+
+const getRoquePositions = (kingPiece, pieces, history) => {
+    let positions = []
+    if (canDoRoque(kingPiece.id, history)) {
+        //torre hardcode pra ganhar tempo -> torre do player => id = 8 e 15;
+        if (canDoRoque(8, history)) {
+            if (checkIfPositionIsEmpty('x0y3', pieces) && checkIfPositionIsEmpty('x0y2', pieces) && checkIfPositionIsEmpty('x0y1', pieces)) {
+                positions.push('x0y2')
+            }
+        }
+        if (canDoRoque(15, history)) {
+            if (checkIfPositionIsEmpty('x0y5', pieces) && checkIfPositionIsEmpty('x0y6', pieces)) {
+                positions.push('x0y6')
+            }
+        }
     }
     return positions;
 }

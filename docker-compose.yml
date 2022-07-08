@@ -9,4 +9,8 @@ services:
     command: npm run start:dev
     ports:
       - "3000:3000"
-    env_file: ./config/.env
+    environment:
+      - COMPOSE_DOCKER_CLI_BUILD=1
+      - DOCKER_BUILDKIT=1
+      - NODE_ENV=development
+      - DEBUG=chess-app:*
