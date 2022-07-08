@@ -16,11 +16,20 @@ O projeto visa criar um jogo de xadrez web
 - Apresentação 2:
  https://docs.google.com/presentation/d/1ziE5Y5lv56qknVS--pAsiKFu0WNvHWTKl96A1A1CtoQ/edit#slide=id.g131634f07db_0_13
 
+- Apresentação 3:
+https://docs.google.com/presentation/d/1celCfnzvw8_XbnJRKe1NCHgAxLdAeTE7jHylhHoNwcg/edit#slide=id.g13baf765131_0_5
+
 - Trello: 
 https://trello.com/b/GlxV9LBh/xadrez
 
 - Gráfico de Gantt: 
 https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQhBwQ/edit#gid=1115838130
+
+## Como jogar
+
+- Use o link abaixo que irá abrir a página web para testar o nosso jogo :
+
+https://chessgamegrupo6.netlify.app/
 
 ## Como rodar (primeiramente)
 
@@ -39,3 +48,4 @@ https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQh
 - Crie um .env na pasta config, seguindo como base o .env.sample
 - Rode o comando `npm build` para buildar o projeto
 - Rode o comando `npm start` para iniciar o projeto
+- Rode o comando 'npm test' para testar o projeto
