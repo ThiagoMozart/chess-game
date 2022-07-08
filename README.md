@@ -29,7 +29,7 @@ https://docs.google.com/spreadsheets/d/1iM5aB3RXztvSj22315Cbu_ur3tzPj2fTjhLSkqQh
 
 - Use o link abaixo que irá abrir a página web para testar o nosso jogo :
 
-https://chessgamegrupo6.netlify.app/
+   https://chessgamegrupo6.netlify.app/
 
 ## Como rodar (primeiramente)
 
@@ -41,11 +41,11 @@ https://chessgamegrupo6.netlify.app/
 - Rode o comando `make build` para buildar o projeto
 - Rode o comando `make start` para iniciar o projeto
 - Rode o comando `make stop` para parar o projeto
-- Rode o comando 'make test' para testar o projeto
+- Rode o comando `make test` para testar o projeto
 
 ### Sem Docker
 
 - Crie um .env na pasta config, seguindo como base o .env.sample
 - Rode o comando `npm build` para buildar o projeto
 - Rode o comando `npm start` para iniciar o projeto
-- Rode o comando 'npm test' para testar o projeto
+- Rode o comando `npm test` para testar o projeto
